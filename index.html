@@ -1,176 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CanSat Ground Control Software</title>
+    <title>CanSat GCS | ISL Mission Control</title>
 
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/dashboard.css">
-<link rel="stylesheet" href="css/telemetry.css">
-<link rel="stylesheet" href="css/graphs.css">
-<link rel="stylesheet" href="css/controls.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/telemetry.css">
+    <link rel="stylesheet" href="css/graphs.css">
+    <link rel="stylesheet" href="css/controls.css">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet"
+        href="https://unpkg.com/leaflet/dist/leaflet.css">
+
+    <link rel="icon" href="assets/favicon.png">
 </head>
 
 <body>
 
-<header>
+<div class="app-container">
 
-<h1>🛰 CanSat Ground Control Software</h1>
+    <!-- ========================================================= -->
+    <!-- HEADER -->
+    <!-- ========================================================= -->
 
-</header>
+    <header class="top-header">
 
-<div class="dashboard">
+        <div class="header-left">
 
-<div class="card telemetry">
+            <h1>
+                <i class="fa-solid fa-satellite"></i>
+                CanSat Ground Control Software
+            </h1>
 
-<h2>📡 Live Telemetry</h2>
+            <p>Indian Society of Lighting (ISL)</p>
 
-<div class="telemetry-grid">
-
-<div class="telemetry-item">
-<span>Packet</span>
-<strong id="packetNo">00001</strong>
-</div>
-
-<div class="telemetry-item">
-<span>Altitude</span>
-<strong id="altitude">120 m</strong>
-</div>
-
-<div class="telemetry-item">
-<span>Temperature</span>
-<strong id="temperature">28 °C</strong>
-</div>
-
-<div class="telemetry-item">
-<span>Pressure</span>
-<strong id="pressure">1008 hPa</strong>
-</div>
-
-<div class="telemetry-item">
-<span>Battery</span>
-<strong id="battery">4.1 V</strong>
-</div>
-
-<div class="telemetry-item">
-<span>Descent Rate</span>
-<strong id="descent">9.2 m/s</strong>
-</div>
-
-<div class="telemetry-item">
-<span>Latitude</span>
-<strong id="latitude">12.9141</strong>
-</div>
-
-<div class="telemetry-item">
-<span>Longitude</span>
-<strong id="longitude">74.8560</strong>
-</div>
-
-</div>
-
-</div>
-
-<div class="card graphs">
-
-<h2>📈 Live Graphs</h2>
-
-<canvas id="telemetryChart"></canvas>
-
-</div>
-
-<div class="card map">
-<div class="card map">
-
-<h2>🗺 GPS Tracking</h2>
-
-<div id="map"></div>
-
-</div>
-
-<div class="card mission">
-
-    <h2>🚀 Mission Control</h2>
-
-    <div class="mission-buttons">
-
-        <button id="manualBtn" class="mission-btn">
-            Manual Separation
-        </button>
-
-        <button id="parachuteBtn" class="mission-btn danger">
-            Emergency Parachute
-        </button>
-
-        <button id="redundantBtn" class="mission-btn">
-            Redundant Activation
-        </button>
-
-    </div>
-
-    <div class="command-status">
-
-        <h3>Command Status</h3>
-
-        <p id="commandOutput">
-            Waiting for command...
-        </p>
-
-    </div>
-
-</div>
-
-<div class="card orientation">
-<h2>🧭 Orientation</h2>
-</div>
-
-<div class="card camera">
-<h2>🎥 Camera</h2>
-</div>
-
-<div class="card error">
-
-    <h2>⚠ Error Code System</h2>
-
-    <div class="error-display">
-
-        <div id="errorCode" class="error-number">
-            0000
         </div>
 
-        <div id="errorMessage">
-            All Systems Normal
+        <div class="header-right">
+
+            <div class="status connected">
+
+                <i class="fa-solid fa-circle"></i>
+
+                Connected
+
+            </div>
+
+            <div class="status-box">
+
+                <span>Mission Time</span>
+
+                <strong id="missionTimer">
+                    00:00:00
+                </strong>
+
+            </div>
+
+            <div class="status-box">
+
+                <span>Packet</span>
+
+                <strong id="packetNo">
+                    00001
+                </strong>
+
+            </div>
+
         </div>
 
-    </div>
+    </header>
 
-    <div class="error-grid">
+    <!-- ========================================================= -->
+    <!-- TOOLBAR -->
+    <!-- ========================================================= -->
 
-        <div>Descent Rate</div>
-        <div id="err1">🟢</div>
+    <section class="toolbar">
 
-        <div>GPS</div>
-        <div id="err2">🟢</div>
+        <button id="startMission">
+            <i class="fa-solid fa-play"></i>
+            Start
+        </button>
 
-        <div>Payload</div>
-        <div id="err3">🟢</div>
+        <button id="stopMission">
+            <i class="fa-solid fa-stop"></i>
+            Stop
+        </button>
 
-        <div>Parachute</div>
-        <div id="err4">🟢</div>
+        <button id="exportCSV">
+            <i class="fa-solid fa-file-csv"></i>
+            CSV
+        </button>
 
-    </div>
+        <button id="exportGraph">
+            <i class="fa-solid fa-chart-line"></i>
+            Graph
+        </button>
+
+        <button id="syncTime">
+            <i class="fa-solid fa-clock"></i>
+            Sync
+        </button>
+
+        <button id="resetMission">
+            <i class="fa-solid fa-rotate"></i>
+            Reset
+        </button>
+
+        <div class="serial-status">
+
+            <span>Serial</span>
+
+            <strong id="serialStatus">
+                Disconnected
+            </strong>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- MAIN DASHBOARD -->
+    <!-- ========================================================= -->
+
+    <main class="dashboard-grid">
+
+        <!-- LEFT PANEL -->
+
+        <section id="leftPanel" class="left-panel">
+
+            <div class="card telemetry">
+
+                <h2>
+                    <i class="fa-solid fa-signal"></i>
+                    Live Telemetry
+                </h2>
+
+                <div class="telemetry-grid">
+
+                    <div class="telemetry-item">
+                        <span>Packet</span>
+                        <strong id="packetValue">00001</strong>
+                    </div>
+
+                    <div class="telemetry-item">
+                        <span>Altitude</span>
+                        <strong id="altitude">120 m</strong>
+                    </div>
+
+                    <div class="telemetry-item">
+                        <span>Temperature</span>
+                        <strong id="temperature">28 °C</strong>
+                    </div>
+
+                    <div class="telemetry-item">
+                        <span>Pressure</span>
+                        <strong id="pressure">1008 hPa</strong>
+                    </div>
+
+                    <div class="telemetry-item">
+                        <span>Battery</span>
+                        <strong id="battery">4.1 V</strong>
+                    </div>
+
+                    <div class="telemetry-item">
+                        <span>Descent Rate</span>
+                        <strong id="descent">9.2 m/s</strong>
+                    </div>
+
+                    <div class="telemetry-item">
+                        <span>Latitude</span>
+                        <strong id="latitude">12.9141</strong>
+                    </div>
+
+                    <div class="telemetry-item">
+                        <span>Longitude</span>
+                        <strong id="longitude">74.8560</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card mission">
+
+                <h2>
+                    <i class="fa-solid fa-rocket"></i>
+                    Mission Control
+                </h2>
+
+                <div class="mission-buttons">
+
+                    <button id="manualBtn" class="mission-btn">
+                        Manual Separation
+                    </button>
+
+                    <button id="parachuteBtn"
+                        class="mission-btn danger">
+                        Emergency Parachute
+                    </button>
+
+                    <button id="redundantBtn"
+                        class="mission-btn">
+                        Redundant Activation
+                    </button>
+
+                </div>
+
+                <div class="command-status">
+
+                    <h3>Command Status</h3>
+
+                    <p id="commandOutput">
+                        Waiting for command...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- CENTER PANEL -->
+
+        <section id="centerPanel" class="center-panel">
+
+            <div class="card graphs">
+
+                <h2>
+                    <i class="fa-solid fa-chart-area"></i>
+                    Live Graphs
+                </h2>
+
+                <canvas id="telemetryChart"></canvas>
+
+            </div>
+
+            <div class="card orientation">
+
+                <h2>
+                    <i class="fa-solid fa-compass"></i>
+                    Orientation
+                </h2>
+
+                <div id="orientationContainer">
+
+                    <canvas id="orientationCanvas"></canvas>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- RIGHT PANEL -->
+
+        <section id="rightPanel" class="right-panel">
+
+            <div class="card map">
+
+                <h2>
+                    <i class="fa-solid fa-location-dot"></i>
+                    GPS Tracking
+                </h2>
+
+                <div id="map"></div>
+
+            </div>
+
+            <div class="card camera">
+
+                <h2>
+                    <i class="fa-solid fa-video"></i>
+                    Camera
+                </h2>
+
+                <video
+                    id="cameraFeed"
+                    autoplay
+                    muted
+                    playsinline>
+                </video>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ========================================================= -->
+    <!-- BOTTOM CONSOLE -->
+    <!-- ========================================================= -->
+
+    <footer id="console" class="bottom-console">
+
+        <div class="card error">
+
+            <h2>
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                Error Code System
+            </h2>
+
+            <div class="error-display">
+
+                <div
+                    id="errorCode"
+                    class="error-number">
+                    0000
+                </div>
+
+                <div id="errorMessage">
+                    All Systems Normal
+                </div>
+
+            </div>
+
+            <div class="error-grid">
+
+                <div>Descent Rate</div>
+                <div id="err1">🟢</div>
+
+                <div>GPS</div>
+                <div id="err2">🟢</div>
+
+                <div>Payload</div>
+                <div id="err3">🟢</div>
+
+                <div>Parachute</div>
+                <div id="err4">🟢</div>
+
+            </div>
+
+        </div>
+
+        <div class="card mission-log">
+
+            <h2>
+                <i class="fa-solid fa-scroll"></i>
+                Mission Log
+            </h2>
+
+            <div id="missionLog">
+
+                Mission initialized...
+
+            </div>
+
+        </div>
+
+        <div class="card serial-monitor">
+
+            <h2>
+                <i class="fa-solid fa-terminal"></i>
+                Serial Monitor
+            </h2>
+
+            <pre id="serialMonitor">
+
+Waiting for serial connection...
+
+            </pre>
+
+        </div>
+
+    </footer>
 
 </div>
 
+<!-- JS Libraries -->
 
-</div>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- JS -->
 
 <script src="js/telemetry.js"></script>
 <script src="js/charts.js"></script>
