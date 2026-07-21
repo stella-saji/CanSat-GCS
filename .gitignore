@@ -1,0 +1,6 @@
+node_modules/
+exports/
+data/*.csv
+*.log
+.vscode/
+.DS_Store

@@ -59,3 +59,17 @@ background:#111827;
 border-radius:8px;
 
 }
+
+#map{
+
+height:240px;
+
+width:100%;
+
+border-radius:12px;
+
+margin-top:15px;
+
+overflow:hidden;
+
+}
