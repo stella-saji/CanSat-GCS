@@ -1,0 +1,225 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#0f172a;
+color:white;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+header{
+background:#111827;
+padding:20px;
+text-align:center;
+border-bottom:2px solid #00ff99;
+}
+
+.dashboard{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:15px;
+
+padding:20px;
+
+}
+
+.card{
+
+background:linear-gradient(180deg,#1f2937,#111827);
+
+border:1px solid #00ff99;
+
+border-radius:14px;
+
+padding:18px;
+
+box-shadow:0 0 15px rgba(0,255,150,.15);
+
+transition:.25s;
+
+}
+
+.card h2{
+
+color:#00ff99;
+
+margin-bottom:15px;
+
+}
+
+.controls{
+grid-column:span 3;
+min-height:120px;
+}
+
+.telemetry{
+grid-row:span 2;
+}
+
+.graphs{
+grid-column:span 2;
+}
+
+.map{
+grid-column:span 2;
+}
+
+.orientation{
+grid-column:span 1;
+}
+
+.camera{
+grid-column:span 1;
+}
+
+.error{
+grid-column:span 1;
+}
+
+.toolbar{
+
+display:flex;
+
+gap:15px;
+
+margin-top:20px;
+
+flex-wrap:wrap;
+
+}
+
+.toolbar button{
+
+padding:12px 20px;
+
+border:none;
+
+border-radius:8px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+background:#00ff99;
+
+color:#111;
+
+transition:.3s;
+
+}
+
+.toolbar button:hover{
+
+transform:scale(1.05);
+
+}
+
+#status{
+
+margin-top:20px;
+
+font-size:18px;
+
+}
+
+.online{
+
+color:#00ff00;
+
+font-weight:bold;
+
+}
+
+.offline{
+
+color:red;
+
+font-weight:bold;
+
+}
+.mission{
+grid-column:span 1;
+}
+
+.orientation{
+grid-column:span 1;
+}
+
+.error{
+grid-column:span 3;
+min-height:100px;
+}
+
+.card:hover{
+
+transform:translateY(-4px);
+
+box-shadow:0 0 20px rgba(0,255,150,.35);
+
+}
+
+.telemetry-grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:12px;
+
+margin-top:20px;
+
+}
+
+.telemetry-item{
+
+background:#0f172a;
+
+padding:12px;
+
+border-radius:10px;
+
+border:1px solid #334155;
+
+display:flex;
+
+flex-direction:column;
+
+}
+
+.telemetry-item span{
+
+font-size:13px;
+
+color:#94a3b8;
+
+}
+
+.telemetry-item strong{
+
+font-size:20px;
+
+margin-top:6px;
+
+color:#00ff99;
+
+}
+
+.graphs{
+
+height:320px;
+
+}
+
+.graphs canvas{
+
+margin-top:15px;
+
+height:240px !important;
+
+}

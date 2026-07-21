@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CanSat Ground Control Software</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/telemetry.css">
+<link rel="stylesheet" href="css/graphs.css">
+<link rel="stylesheet" href="css/controls.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>🛰 CanSat Ground Control Software</h1>
+
+</header>
+
+<div class="dashboard">
+
+<div class="card telemetry">
+
+<h2>📡 Live Telemetry</h2>
+
+<div class="telemetry-grid">
+
+<div class="telemetry-item">
+<span>Packet</span>
+<strong id="packetNo">00001</strong>
+</div>
+
+<div class="telemetry-item">
+<span>Altitude</span>
+<strong id="altitude">120 m</strong>
+</div>
+
+<div class="telemetry-item">
+<span>Temperature</span>
+<strong id="temperature">28 °C</strong>
+</div>
+
+<div class="telemetry-item">
+<span>Pressure</span>
+<strong id="pressure">1008 hPa</strong>
+</div>
+
+<div class="telemetry-item">
+<span>Battery</span>
+<strong id="battery">4.1 V</strong>
+</div>
+
+<div class="telemetry-item">
+<span>Descent Rate</span>
+<strong id="descent">9.2 m/s</strong>
+</div>
+
+<div class="telemetry-item">
+<span>Latitude</span>
+<strong id="latitude">12.9141</strong>
+</div>
+
+<div class="telemetry-item">
+<span>Longitude</span>
+<strong id="longitude">74.8560</strong>
+</div>
+
+</div>
+
+</div>
+
+<div class="card graphs">
+
+<h2>📈 Live Graphs</h2>
+
+<canvas id="telemetryChart"></canvas>
+
+</div>
+
+<div class="card map">
+<h2>🗺 GPS Tracking</h2>
+</div>
+
+<div class="card mission">
+
+    <h2>🚀 Mission Control</h2>
+
+    <div class="mission-buttons">
+
+        <button id="manualBtn" class="mission-btn">
+            Manual Separation
+        </button>
+
+        <button id="parachuteBtn" class="mission-btn danger">
+            Emergency Parachute
+        </button>
+
+        <button id="redundantBtn" class="mission-btn">
+            Redundant Activation
+        </button>
+
+    </div>
+
+    <div class="command-status">
+
+        <h3>Command Status</h3>
+
+        <p id="commandOutput">
+            Waiting for command...
+        </p>
+
+    </div>
+
+</div>
+
+<div class="card orientation">
+<h2>🧭 Orientation</h2>
+</div>
+
+<div class="card camera">
+<h2>🎥 Camera</h2>
+</div>
+
+<div class="card error">
+
+    <h2>⚠ Error Code System</h2>
+
+    <div class="error-display">
+
+        <div id="errorCode" class="error-number">
+            0000
+        </div>
+
+        <div id="errorMessage">
+            All Systems Normal
+        </div>
+
+    </div>
+
+    <div class="error-grid">
+
+        <div>Descent Rate</div>
+        <div id="err1">🟢</div>
+
+        <div>GPS</div>
+        <div id="err2">🟢</div>
+
+        <div>Payload</div>
+        <div id="err3">🟢</div>
+
+        <div>Parachute</div>
+        <div id="err4">🟢</div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="js/telemetry.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/mission.js"></script>
+<script src="js/errors.js"></script>
+<script src="js/map.js"></script>
+<script src="js/orientation.js"></script>
+<script src="js/camera.js"></script>
+<script src="js/export.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
